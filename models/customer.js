@@ -76,18 +76,42 @@ var customerSchema = new Schema({
   confirm_Password: {
     type: String
   },
-  address1: {
-    type: String,
-    required: true
-  },
-  address2: {
-    type: String,
-    required: true
-  },
-  pincode: {
-    type: String,
-    required: true
-  },
+  address: [{
+    home: [{
+      pincode: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 6,
+      },
+      flat_no: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      society: {
+        type: String,
+        trim: true
+      },
+      landmark: {
+        type: String,
+        required: true,
+        trim: true
+      }
+    }]
+  }],
+  // address1: {
+  //   type: String,
+  //   required: true
+  // },
+  // address2: {
+  //   type: String,
+  //   required: true
+  // },
+  // pincode: {
+  //   type: String,
+  //   required: true
+  // },
   city: {
     type: String,
     required: true

@@ -1,4 +1,4 @@
-require('./config/config');
+const config =  require('./config/config');
 var express = require('express');
 var nodeMailer = require('nodemailer');
 var path = require('path');
@@ -16,7 +16,6 @@ const fs = require('fs')
 
 
 var item1Router = require('./routers/item1');
-var customer1Router = require('./routers/customer1');
 var admininfoRouter=require('./routers/loginadmin');
 var areaRouter=require('./routers/area');
 var roleRouter=require('./routers/role');
@@ -56,7 +55,7 @@ var referralRouter=require('./routers/referral');
 
 const router = express.Router()
 var app = express();
-const port = process.env.PORT || 3000;
+const port = config.PORT;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -68,7 +67,6 @@ app.use(passport.initialize());
 app.use(cors());
 
 app.use('/api', item1Router);
-app.use('/api', customer1Router);
 app.use('/api',admininfoRouter);
 app.use('/api',areaRouter);
 app.use('/api',roleRouter);
@@ -105,6 +103,7 @@ app.use('/api',workshopacivityRouter);
 app.use('/api',itemRouter);
 app.use('/api',gstRouter);
 app.use('/api',referralRouter);
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

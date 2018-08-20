@@ -4,11 +4,6 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var Admininfo = require('./admininfo');
 var ordertypeSchema = new Schema({
-  id: {
-    type:Number,
-    unique:true,
-    default:1
-  },
   order_type: {
     type:String,
     unique:true
@@ -28,6 +23,9 @@ var ordertypeSchema = new Schema({
     type: Date
   },
   status:{
+    type: Boolean
+  },
+  state:{
     type: Boolean
   }
 }, { collection: 'ordertypes' });

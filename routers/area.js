@@ -56,19 +56,17 @@ areaRouter
 areaRouter
   .route('/areas/:areaId')
   .get(checkAuth, function (req, res) {
-    console.log('GET /areas/:areaId');
     var areaId = req.params.areaId;
     Area.findOne({ id: areaId }, function (err, area) {
       if (err) {
         res.status(500).send(err);
         return;
       }
-      console.log(area);
+      // console.log(area);
       res.json(area);
     });
   })
   .put(checkAuth, function (req, res) {
-    console.log('PUT /areas/:areaId');
     var areaId = req.params.areaId;
     Area.findOne({ _id: areaId }, function (err, area) {
       if (err) {
@@ -93,7 +91,6 @@ areaRouter
   areaRouter
   .route('/areass/:areaId')
   .put(checkAuth, function (req, res) {
-    console.log('PUT /colorss/:areaId');
     var areaId = req.params.areaId;
     Area.findOne({ _id: areaId }, function (err, area) {
       if (err) {

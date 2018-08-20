@@ -15,20 +15,19 @@ var customerRouter = express.Router();
 customerRouter
   .route('/customer')
   .post(checkAuth, function (req, res) {
-    console.log(';;;;;;;;;;;;;;;;;;;;;;;;;')
     if (!req.body) {
       res.json({ success: false, msg: 'Please Enter Required Data.' });
     } else {
-      var randomstring = ''; var string;
+      var randomstring = '';
       var chars = "123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
       var string_length = 6;
       for (var i = 0; i < string_length; i++) {
         var rnum = Math.floor(Math.random() * chars.length);
-        string += chars.substring(rnum, rnum + 1);
+        randomstring += chars.substring(rnum, rnum + 1);
       }
-      savedata(counter, randomstring);
+      savedata(randomstring);
     }
-    function savedata(counter, randomstring) {
+    function savedata(randomstring) {
       var referral_Code = randomstring.toUpperCase();
       // var area = new Area(req.body);
       var customer = new Customer({
@@ -37,7 +36,7 @@ customerRouter
         order_type: req.body.order_type,
         gender: req.body.gender,
         dob: req.body.dob,
-        email: req.body.email,
+        email: req.body.email,       
         mobile: req.body.mobile,
         whatsup: req.body.whatsup,
         otp: req.body.otp,
@@ -45,9 +44,9 @@ customerRouter
         username: req.body.username,
         password: req.body.password,
         confirm_Password: req.body.confirm_Password,
-        address1: req.body.address1,
-        address2: req.body.address2,
-        pincode: req.body.pincode,
+        // address1: req.body.address1,
+        // address2: req.body.address2,
+        // pincode: req.body.pincode,
         city: req.body.city,
         state: req.body.state,
         created_by: req.body.admin_id,
@@ -55,6 +54,13 @@ customerRouter
         status: true,
         statee: true
       });
+      var home = {
+        pincode: req.body.pincode,
+        flat_no: req.body.flat_no,
+        society: req.body.society,
+        landmark: req.body.landmark,
+    }
+      customer.address.push({home});
       customer.save().then()
       customer.save(function (err) {
         if (err) {
@@ -79,7 +85,6 @@ customerRouter
           res.status(500).send(err);
           return;
         }
-        console.log('The Customer  is %s', customers);
         res.json(customers);
       });
 
@@ -90,7 +95,7 @@ customerRouter
   .route('/customers/:customerId')
   .get(checkAuth, function (req, res) {
 
-    console.log('GET /customers/:customerId');
+    ////console.log('GET /customers/:customerId');
 
     var customerId = req.params.customerId;
 
@@ -100,9 +105,6 @@ customerRouter
         res.status(500).send(err);
         return;
       }
-
-      console.log(customer);
-
       res.json(customer);
 
     });
@@ -111,8 +113,6 @@ customerRouter
 
   //Create router for Updating .
   .put(checkAuth, function (req, res) {
-
-    console.log('PUT /customers/:customerId');
 
     var customerId = req.params.customerId;
 
@@ -136,8 +136,8 @@ customerRouter
         customer.pincode = req.body.pincode;
         customer.city = req.body.city;
         customer.state = req.body.state,
-          customer.status = req.body.status,
-          customer.updated_by = req.body.updated_by;
+        customer.status = req.body.status,
+        customer.updated_by = req.body.updated_by;
         customer.updated_at = myDateString;
         customer.save();
 
@@ -150,10 +150,11 @@ customerRouter
       });
     });
   })
+  
 customerRouter
   .route('/customerss/:customerId')
   .put(checkAuth, function (req, res) {
-    console.log('PUT /customerss/:customerId');
+    ////console.log('PUT /customerss/:customerId');
     var customerId = req.params.customerId;
     Customer.findOne({ _id: customerId }, function (err, customer) {
       if (err) {

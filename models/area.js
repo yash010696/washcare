@@ -45,9 +45,4 @@ var areaSchema = new Schema({
   timestamps: true
 }, { collection: 'areas' });
 
-
-
-{
-  timestamps: true
-}
 module.exports = mongoose.model('Area', areaSchema);
