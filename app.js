@@ -55,7 +55,8 @@ var referralRouter=require('./routers/referral');
 
 const router = express.Router()
 var app = express();
-const port = config.PORT || 3000;
+// const port = config.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
