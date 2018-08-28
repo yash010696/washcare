@@ -36,7 +36,7 @@ customerRouter
         order_type: req.body.order_type,
         gender: req.body.gender,
         dob: req.body.dob,
-        email: req.body.email,       
+        email: req.body.email,
         mobile: req.body.mobile,
         whatsup: req.body.whatsup,
         otp: req.body.otp,
@@ -59,8 +59,8 @@ customerRouter
         flat_no: req.body.flat_no,
         society: req.body.society,
         landmark: req.body.landmark,
-    }
-      customer.address.push({home});
+      }
+      customer.address.push({ home });
       customer.save().then()
       customer.save(function (err) {
         if (err) {
@@ -78,9 +78,9 @@ customerRouter
   //Create router for fetching All subservice.
   .get(checkAuth, function (req, res) {
     Customer
-    .find({ statee: true })
-    .populate('order_type')
-    .exec(function (err, customers) {
+      .find({ statee: true })
+      .populate('order_type')
+      .exec(function (err, customers) {
         if (err) {
           res.status(500).send(err);
           return;
@@ -137,8 +137,8 @@ customerRouter
         // customer.pincode = req.body.pincode;
         customer.city = req.body.city;
         customer.state = req.body.state,
-        customer.status = req.body.status,
-        customer.updated_by = req.body.admin_id;
+          customer.status = req.body.status,
+          customer.updated_by = req.body.admin_id;
         customer.updated_at = myDateString;
         customer.save();
 
@@ -151,28 +151,21 @@ customerRouter
       });
     });
   })
-  
+
 customerRouter
   .route('/customerss/:customerId')
   .put(checkAuth, function (req, res) {
     ////console.log('PUT /customerss/:customerId');
     var customerId = req.params.customerId;
-    Customer.findOne({ _id: customerId }, function (err, customer) {
-      if (err) {
-        res.status(500).send(err);
-        return;
+    Customer.findOneAndUpdate({ _id: customerId }, {
+      $set: {
+        statee : false
       }
-      if (customer) {
-        customer.statee = false;
+    }).then(customer => {
+      res.json(customer);
+    }).catch(err => {
+      res.status(500).send(err);
+    })
 
-        customer.save();
-        res.json(customer);
-        return;
-      }
-
-      res.status(404).json({
-        message: 'Unable to found.'
-      });
-    });
   })
 module.exports = customerRouter;
