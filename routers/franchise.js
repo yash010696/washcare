@@ -59,8 +59,8 @@ franchiseRouter
   //Create router for fetching All subservice.
   .get(checkAuth, function (req, res) {
     Franchise.
-      find({ statee: true }).
-      populate('area').
+      find({ statee: true })
+      .populate('area').
       exec(function (err, franchises) {
         if (err) {
           res.status(500).send(err);

@@ -36,13 +36,14 @@ ordertypeRouter
       var ordertype = new Ordertype({
         // id: cc,
         order_type: req.body.order_type,
-        created_by: req.body.admin_id,
+        created_by: req.body.created_by,
         created_at: myDateString,
         updated_by: null,
         updated_at: myDateString,
         status: true,
         state: true
       });
+      console.log('aaaaaaaaaaaa',ordertype);
       ordertype.save(function (err) {
         if (err) {
           res.status(400).send(err);
@@ -123,6 +124,7 @@ ordertypeRouter
   .route('/delordertype/:ordertypeId')
   .put(checkAuth, (req, res) => {
     var ordertypeId = req.params.ordertypeId;
+    console.log('aaaaaaaa')
     Ordertype.findOneAndUpdate({ _id: ordertypeId }, {
       $set: {
         state: false

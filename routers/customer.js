@@ -77,14 +77,15 @@ customerRouter
 
   //Create router for fetching All subservice.
   .get(checkAuth, function (req, res) {
-    Customer.
-      find({ statee: true }).
-      populate('order_type').
-      exec(function (err, customers) {
+    Customer
+    .find({ statee: true })
+    .populate('order_type')
+    .exec(function (err, customers) {
         if (err) {
           res.status(500).send(err);
           return;
         }
+        console.log(customers)
         res.json(customers);
       });
 
@@ -99,7 +100,7 @@ customerRouter
 
     var customerId = req.params.customerId;
 
-    Customer.findOne({ id: customerId }, function (err, customer) {
+    Customer.findOne({ _id: customerId }, function (err, customer) {
 
       if (err) {
         res.status(500).send(err);
@@ -131,13 +132,13 @@ customerRouter
         customer.email = req.body.email;
         customer.mobile = req.body.mobile;
         customer.whatsup = req.body.whatsup;
-        customer.address1 = req.body.address1;
-        customer.address2 = req.body.address2;
-        customer.pincode = req.body.pincode;
+        // customer.address1 = req.body.address1;
+        // customer.address2 = req.body.address2;
+        // customer.pincode = req.body.pincode;
         customer.city = req.body.city;
         customer.state = req.body.state,
         customer.status = req.body.status,
-        customer.updated_by = req.body.updated_by;
+        customer.updated_by = req.body.admin_id;
         customer.updated_at = myDateString;
         customer.save();
 
